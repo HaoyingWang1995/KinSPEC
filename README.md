@@ -89,60 +89,9 @@ P42336,CN1C=NC2=C1C(=O)N(C(=O)N2C)C,1
 
 The example labels above are illustrative only.
 
-### Input requirements
-
-#### `uniprot_id`
-
-- Use a UniProt accession rather than a gene symbol or protein name.
-- The accession must be represented in the kinase feature files used by the notebooks.
-- The current KinSPEC protein representation is designed for the 482 typical kinase entries included in this repository.
-- Targets outside this kinase set require a compatible KLIFS-aligned 85-residue pocket representation before they can be used.
-
-#### `SMILES`
-
-- The value must be a valid molecular structure that can be parsed by RDKit.
-- Standardised or canonical SMILES are recommended.
-- Salts, disconnected fragments, duplicate structures, and inconsistent protonation states should be handled before training.
-- Invalid SMILES entries should be corrected or removed.
-
-#### `molecule_label`
-
-Use integer binary labels:
-
-- `1`: active compound-kinase interaction
-- `0`: inactive compound-kinase interaction
-
-The activity threshold used to create the labels depends on the source dataset and should be documented before model training.
-
----
-
-## Prediction-Only Input
-
-For prediction on unlabelled compound-kinase pairs, the `classification` column may be omitted:
-
-```csv
-uniprot_id,standard_smiles
-P00533,CCOc1ccc2nc(S(N)(=O)=O)sc2c1
-P31749,CC(=O)Oc1ccccc1C(=O)O
-```
-
-When experimental labels are available, the `classification` column can be retained for model evaluation.
-
----
-
 ## Data Availability
 
-Dataset download information is provided in:
-
-```text
-dataset/dataset_download.txt
-```
-
-Download the required datasets before running the data-construction and training notebooks.
-
-Large datasets and model checkpoints may not be stored directly in the GitHub repository. For large `.pt` files, Git LFS or an external repository such as Zenodo may be required.
-
----
+Text dataset download information used in the literature is provided at https://zenodo.org/uploads/20558270.
 
 ## Installation
 
