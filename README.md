@@ -111,19 +111,6 @@ conda create -n kinspec python
 conda activate kinspec
 ```
 
-Alternatively, using `venv`:
-
-```bash
-python -m venv kinspec_env
-source kinspec_env/bin/activate
-```
-
-On Windows:
-
-```bash
-kinspec_env\Scripts\activate
-```
-
 ### 3. Install the required packages
 
 The notebooks use packages for molecular processing, machine learning, dimensionality reduction, model interpretation, statistics, and visualisation.
@@ -134,42 +121,6 @@ Core dependencies include:
 pip install jupyter numpy pandas scipy scikit-learn matplotlib
 pip install rdkit torch xgboost shap optuna prince umap-learn
 ```
-
-Additional packages may be required by individual notebooks. The imports at the beginning of each notebook should be treated as the authoritative dependency list.
-
----
-
-## Running the Notebooks
-
-Start Jupyter Notebook from the repository directory:
-
-```bash
-jupyter notebook
-```
-
-Alternatively:
-
-```bash
-jupyter lab
-```
-
-Before running a notebook:
-
-1. Select the correct Python environment as the Jupyter kernel.
-2. Update all input, model, and output paths.
-3. Confirm that the required datasets and pretrained model files are available.
-4. Restart the kernel.
-5. Run the cells from top to bottom.
-
-Recommended Jupyter command:
-
-```text
-Kernel → Restart Kernel and Run All Cells
-```
-
-Because notebooks retain variables from previous executions, restarting the kernel before a complete run helps avoid hidden state and improves reproducibility.
-
----
 
 ## Workflow
 
