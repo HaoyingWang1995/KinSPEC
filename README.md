@@ -81,7 +81,7 @@ The main input table should contain one compound-target pair per row.
 Example:
 
 ```csv
-uniprot_id,standard_smiles,classification
+uniprot_id,SMILES,molecule_label
 P00533,CCOc1ccc2nc(S(N)(=O)=O)sc2c1,1
 P31749,CC(=O)Oc1ccccc1C(=O)O,0
 P42336,CN1C=NC2=C1C(=O)N(C(=O)N2C)C,1
@@ -98,14 +98,14 @@ The example labels above are illustrative only.
 - The current KinSPEC protein representation is designed for the 482 typical kinase entries included in this repository.
 - Targets outside this kinase set require a compatible KLIFS-aligned 85-residue pocket representation before they can be used.
 
-#### `standard_smiles`
+#### `SMILES`
 
 - The value must be a valid molecular structure that can be parsed by RDKit.
 - Standardised or canonical SMILES are recommended.
 - Salts, disconnected fragments, duplicate structures, and inconsistent protonation states should be handled before training.
 - Invalid SMILES entries should be corrected or removed.
 
-#### `classification`
+#### `molecule_label`
 
 Use integer binary labels:
 
