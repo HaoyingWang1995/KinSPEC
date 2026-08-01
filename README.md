@@ -75,8 +75,8 @@ The main input table should contain one compound-target pair per row.
 | Column | Description |
 |---|---|
 | `uniprot_id` | UniProt accession of the kinase target |
-| `standard_smiles` | Standardised SMILES representation of the compound |
-| `classification` | Binary interaction label: `1` for active and `0` for inactive |
+| `SMILES` | Standardised SMILES representation of the compound |
+| `molecule_label` | Binary interaction label: `1` for active and `0` for inactive |
 
 Example:
 
