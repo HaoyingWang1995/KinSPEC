@@ -1,524 +1,148 @@
 # KinSPEC
 
-KinSPEC is a kinase-specific, sequence-based machine-learning framework for predicting compound-protein interactions as a binary classification task.
+KinSPEC is a machine-learning workflow for predicting compound–kinase interactions and analysing kinase selectivity. It combines molecular features learned from Morgan fingerprints, kinase binding-pocket features derived from KLIFS-aligned sequences, and XGBoost classifiers.
 
-The framework combines:
+The repository provides Jupyter notebooks for dataset construction, feature embedding, model training, external evaluation, and model interpretation. Pretrained molecular encoders and trained KinSPEC models are also included.
 
-- molecular structures represented by Morgan fingerprints;
-- a Linear Sparse Autoencoder (LSAE) for molecular feature embedding;
-- KLIFS-defined kinase binding-pocket sequences;
-- Property Signature Method (PSM) features for kinase residues;
-- Multiple Correspondence Analysis (MCA) for kinase embedding;
-- XGBoost for compound-kinase interaction classification;
-- TreeSHAP-based interpretation of molecular and kinase features.
+## Method overview
 
-The workflows in this repository are provided as Jupyter notebooks (`.ipynb`).
+1. Standardised SMILES strings are converted into Morgan fingerprints.
+2. A Linear Sparse Autoencoder (LSAE) compresses the molecular fingerprints into latent features.
+3. KLIFS-aligned kinase pocket sequences are encoded using residue physicochemical properties.
+4. Multiple Correspondence Analysis (MCA) reduces the kinase representation to 200 dimensions.
+5. Molecular and kinase features are concatenated and used to train an XGBoost binary classifier.
+6. SHAP-based analyses connect model predictions to molecular substructures and kinase-pocket properties.
 
----
-
-## Repository Structure
+## Repository structure
 
 ```text
 KinSPEC/
-├── data_split/
-│   ├── compound_similarity_spectrum_design.ipynb
-│   └── construct_training_pool_dataset_with_smiles.ipynb
-│
-├── dataset/
-│   └── dataset_download.txt
-│
+├── data_split/                 # Dataset construction and similarity-spectrum design
+├── dataset/                    # Input and derived datasets
 ├── feature_embedding/
-│   ├── Kinase_test_MCA/
-│   │   ├── human_482_typical_kinase_1955bit.csv
-│   │   ├── MCA_200D_category_contributions.csv
-│   │   ├── MCA_200D_category_coordinates.csv
-│   │   ├── MCA_200D_category_lookup.csv
-│   │   ├── MCA_kinase_200D_bootstrap_stability.csv
-│   │   ├── MCA_kinase_200D_coordinates.csv
-│   │   ├── MCA_kinase_200D_row_cos2.csv
-│   │   ├── MCA_klifs_482_200D_features.csv
-│   │   ├── MCA_klifs.ipynb
-│   │   └── protein_to_binary_MCA.ipynb
-│   │
-│   └── mol/
-│       ├── LSAE_1900k_chembl_model.pt
-│       ├── LSAE_chembl_1900k_of1024d_decoder_top99.pt
-│       ├── LSAE_chembl_1900k_topk_of1024d_top99.pt
-│       ├── LSAE_mol_load_model_karaman.ipynb
-│       ├── LSAE_mol_load_model_vsds.ipynb
-│       ├── LSAE_mol_load_model.ipynb
-│       ├── LSAE_mol_training.ipynb
-│       ├── LSAE_training_pool_decoder_top99.pt
-│       └── morgan_parse_and_sae.ipynb
-│
-├── model_interpretability/
-│   ├── KinSPEC_interpretability_MCA_2.ipynb
-│   └── shannon_entropy_statistics_MCA.ipynb
-│
-├── model_training/
-│   ├── KinSPEC_full_data_training_MCA.ipynb
-│   ├── KinSPEC_similarity_band_training_MCA_2.ipynb
-│   └── load_KinSPEC_MCA.ipynb
-│
-├── LICENSE
-└── README.md
+│   ├── mol/                    # Molecular LSAE training and feature extraction
+│   └── Kinase_test_MCA/        # Kinase property encoding and MCA embedding
+├── model/                      # Trained XGBoost models
+├── model_training/             # Model training and benchmark evaluation
+├── model_interpretability/     # SHAP and entropy analyses
+├── download_model_dataset.ipynb
+├── zenodo_upload_dataset.ipynb
+└── LICENSE
 ```
-
----
-
-## Input Data
-
-The main input table should contain one compound-target pair per row.
-
-### Required columns
-
-| Column | Description |
-|---|---|
-| `uniprot_id` | UniProt accession of the kinase target |
-| `SMILES` | Standardised SMILES representation of the compound |
-| `molecule_label` | Binary interaction label: `1` for active and `0` for inactive |
-
-Example:
-
-```csv
-uniprot_id,SMILES,molecule_label
-P00533,CCOc1ccc2nc(S(N)(=O)=O)sc2c1,1
-P31749,CC(=O)Oc1ccccc1C(=O)O,0
-P42336,CN1C=NC2=C1C(=O)N(C(=O)N2C)C,1
-```
-
-The example labels above are illustrative only.
-
-## Data Availability
-
-Text dataset download information used in the literature is provided at https://zenodo.org/uploads/20558270.
 
 ## Installation
 
-### 1. Clone the repository
+Clone the repository and create an isolated Python environment:
 
 ```bash
 git clone https://github.com/HaoyingWang1995/KinSPEC.git
 cd KinSPEC
-```
 
-### 2. Create an environment
-
-Using Conda:
-
-```bash
-conda create -n kinspec python
+conda create -n kinspec python=3.10 -y
 conda activate kinspec
 ```
 
-### 3. Install the required packages
-
-The notebooks use packages for molecular processing, machine learning, dimensionality reduction, model interpretation, statistics, and visualisation.
-
-Core dependencies include:
+Install Jupyter and the packages used by the notebooks:
 
 ```bash
-pip install jupyter numpy pandas scipy scikit-learn matplotlib
-pip install rdkit torch xgboost shap optuna prince umap-learn
+pip install jupyter numpy pandas scipy scikit-learn matplotlib tqdm requests
+pip install rdkit torch xgboost shap optuna prince
 ```
 
-## Workflow
+GPU acceleration is optional. If it is required, install the PyTorch build appropriate for the local CUDA version by following the [PyTorch installation guide](https://pytorch.org/get-started/locally/).
 
-The repository supports three main use cases:
+## Notebook guide
 
-1. construction of training and benchmark datasets;
-2. model training and evaluation;
-3. prediction and interpretation using trained models.
+### 1. Dataset construction
 
-### A. Dataset construction
-
-#### `data_split/construct_training_pool_dataset_with_smiles.ipynb`
-
-Use this notebook to construct the compound-kinase training pool and associate each entry with its molecular SMILES representation.
-
-Typical tasks include:
-
-- loading source interaction datasets;
-- standardising column names;
-- assigning binary activity labels;
-- matching compounds to SMILES strings;
-- removing invalid or duplicated entries;
-- producing the combined KinSPEC training pool.
-
-#### `data_split/compound_similarity_spectrum_design.ipynb`
-
-Use this notebook to construct the compound-similarity spectrum used for controlled generalisation experiments.
-
-The notebook is intended to:
-
-- calculate molecular similarity between training and test compounds;
-- divide the training pool into predefined similarity bands;
-- sample active and inactive compound-kinase pairs;
-- prepare band-specific datasets for model comparison.
-
----
-
-### B. Molecular feature embedding
-
-The molecular feature workflows are located in:
-
-```text
-feature_embedding/mol/
-```
-
-#### `LSAE_mol_training.ipynb`
-
-Use this notebook to train the molecular Linear Sparse Autoencoder on Morgan fingerprints.
-
-The trained molecular model is stored as a PyTorch checkpoint:
-
-```text
-LSAE_1900k_chembl_model.pt
-```
-
-#### `morgan_parse_and_sae.ipynb`
-
-Use this notebook to:
-
-- parse standardised SMILES strings with RDKit;
-- generate Morgan fingerprints;
-- load the molecular LSAE;
-- generate molecular latent features;
-- save the embedded molecular representation for downstream modelling.
-
-#### `LSAE_mol_load_model.ipynb`
-
-Use this notebook for the general workflow of loading a pretrained molecular LSAE and applying it to molecular input data.
-
-#### `LSAE_mol_load_model_vsds.ipynb`
-
-Use this notebook to generate molecular features for the VSDS-VD TrueDecoy evaluation workflow.
-
-#### `LSAE_mol_load_model_karaman.ipynb`
-
-Use this notebook to generate molecular features for the Karaman kinase-selectivity evaluation workflow.
-
-#### Saved molecular model files
-
-```text
-LSAE_1900k_chembl_model.pt
-LSAE_chembl_1900k_of1024d_decoder_top99.pt
-LSAE_chembl_1900k_topk_of1024d_top99.pt
-LSAE_training_pool_decoder_top99.pt
-```
-
-These files contain the pretrained LSAE checkpoint and saved feature-selection or decoder artifacts used by the molecular embedding notebooks.
-
----
-
-### C. Kinase feature embedding
-
-The kinase feature workflows are located in:
-
-```text
-feature_embedding/Kinase_test_MCA/
-```
-
-#### `protein_to_binary_MCA.ipynb`
-
-Use this notebook to convert KLIFS-aligned kinase pocket sequences into PSM-based protein features.
-
-Each kinase pocket contains:
-
-- 85 KLIFS-aligned residue positions;
-- 23 binary physicochemical properties per residue;
-- 1955 initial binary features in total.
-
-The resulting kinase feature table is stored in:
-
-```text
-human_482_typical_kinase_1955bit.csv
-```
-
-#### `MCA_klifs.ipynb`
-
-Use this notebook to:
-
-- reorganise the binary PSM features into categorical residue-property variables;
-- fit or evaluate the MCA representation;
-- retain the 200-dimensional kinase embedding;
-- calculate MCA category coordinates and contributions;
-- assess row representation quality and bootstrap stability.
-
-#### Saved kinase feature files
-
-| File | Description |
+| Notebook | Purpose |
 |---|---|
-| `human_482_typical_kinase_1955bit.csv` | Initial 1955-bit PSM representation for 482 typical kinases |
-| `MCA_klifs_482_200D_features.csv` | Final 200-dimensional kinase feature table |
-| `MCA_kinase_200D_coordinates.csv` | MCA row coordinates for kinase entries |
-| `MCA_200D_category_coordinates.csv` | MCA coordinates for categorical residue-property levels |
-| `MCA_200D_category_contributions.csv` | Category contributions used for kinase-side interpretation |
-| `MCA_200D_category_lookup.csv` | Mapping between MCA categories and KLIFS residue-property variables |
-| `MCA_kinase_200D_row_cos2.csv` | Row cos² values used to assess representation quality |
-| `MCA_kinase_200D_bootstrap_stability.csv` | Bootstrap stability results for the retained MCA space |
+| `data_split/construct_training_pool_dataset_with_smiles.ipynb` | Merges the PKIS, DUD-E, DUD-Z, Davis, and VSDS sources; harmonises compound–kinase records; resolves conflicts and duplicates; and constructs the full training pool with SMILES. |
+| `data_split/compound_similarity_spectrum_design.ipynb` | Calculates molecular similarity and creates controlled training subsets in predefined similarity bands for generalisation experiments. |
+| `data_split/KIBA_construction.ipynb` | Constructs KIBA evaluation subsets, separates overlapping and non-overlapping entries, and links them to the KinSPEC/VSDS data used by the evaluation workflow. |
+| `data_split/Karaman_dataset_expand.ipynb` | Converts the original wide-format Karaman kinase profiling table into a long compound–kinase table. |
+| `data_split/Karaman_dataset_filter.ipynb` | Filters and standardises the Karaman benchmark, matches supported kinase targets, and evaluates molecular overlap/similarity with the training compounds. |
 
----
+The `dataset/` directory contains the input and generated tables used by these workflows. Dataset contents are not documented individually here because the notebooks identify their required files at the point of use.
 
-### D. KinSPEC model training
+### 2. Molecular feature embedding
 
-The model-training workflows are located in:
-
-```text
-model_training/
-```
-
-#### `KinSPEC_similarity_band_training_MCA_2.ipynb`
-
-Use this notebook to train KinSPEC models on the compound-similarity bands generated by:
-
-```text
-data_split/compound_similarity_spectrum_design.ipynb
-```
-
-This notebook is intended for the VSDS-VD compound-similarity spectrum evaluation.
-
-#### `KinSPEC_full_data_training_MCA.ipynb`
-
-Use this notebook to train KinSPEC on the full available training pool.
-
-This workflow can be used when the aim is to maximise training coverage rather than compare individual similarity bands.
-
-#### `load_KinSPEC_MCA.ipynb`
-
-Use this notebook to load a trained KinSPEC model and generate compound-kinase interaction predictions.
-
-The notebook combines:
-
-- molecular LSAE features;
-- kinase MCA features;
-- a trained XGBoost classifier.
-
----
-
-### E. Model interpretation
-
-The interpretation workflows are located in:
-
-```text
-model_interpretability/
-```
-
-#### `KinSPEC_interpretability_MCA_2.ipynb`
-
-Use this notebook to perform TreeSHAP-based interpretation of KinSPEC predictions.
-
-For molecular features, important LSAE dimensions can be mapped back to:
-
-- Morgan fingerprint bits;
-- atom-centred molecular environments;
-- molecular substructures.
-
-For kinase features, important MCA components can be mapped back to:
-
-- MCA residue-property categories;
-- KLIFS-aligned pocket positions;
-- kinase residue-level importance scores.
-
-#### `shannon_entropy_statistics_MCA.ipynb`
-
-Use this notebook to evaluate whether model-identified kinase residues are associated with conserved or variable regions of the kinase binding pocket.
-
-The notebook performs Shannon entropy and statistical enrichment analyses across KLIFS positions or functional regions.
-
----
-
-## Recommended Execution Order
-
-### Training a similarity-band KinSPEC model
-
-Run the notebooks in the following order:
-
-```text
-1. dataset/dataset_download.txt
-2. data_split/construct_training_pool_dataset_with_smiles.ipynb
-3. data_split/compound_similarity_spectrum_design.ipynb
-4. feature_embedding/mol/morgan_parse_and_sae.ipynb
-5. feature_embedding/Kinase_test_MCA/protein_to_binary_MCA.ipynb
-6. feature_embedding/Kinase_test_MCA/MCA_klifs.ipynb
-7. model_training/KinSPEC_similarity_band_training_MCA_2.ipynb
-8. model_training/load_KinSPEC_MCA.ipynb
-```
-
-The molecular LSAE training notebook can be skipped when the pretrained `.pt` files are used.
-
-### Training on the full training pool
-
-```text
-1. dataset/dataset_download.txt
-2. data_split/construct_training_pool_dataset_with_smiles.ipynb
-3. feature_embedding/mol/morgan_parse_and_sae.ipynb
-4. feature_embedding/Kinase_test_MCA/protein_to_binary_MCA.ipynb
-5. feature_embedding/Kinase_test_MCA/MCA_klifs.ipynb
-6. model_training/KinSPEC_full_data_training_MCA.ipynb
-7. model_training/load_KinSPEC_MCA.ipynb
-```
-
-### Running interpretation
-
-After generating predictions with a trained model:
-
-```text
-1. model_interpretability/KinSPEC_interpretability_MCA_2.ipynb
-2. model_interpretability/shannon_entropy_statistics_MCA.ipynb
-```
-
-The exact paths and intermediate file names should be checked inside each notebook before execution.
-
----
-
-## Model Inputs
-
-For each compound-kinase pair, KinSPEC combines two feature branches.
-
-### Molecular branch
-
-```text
-standard SMILES
-→ Morgan fingerprint
-→ molecular LSAE
-→ retained molecular latent features
-```
-
-### Kinase branch
-
-```text
-UniProt accession
-→ KLIFS-aligned 85-residue pocket sequence
-→ 1955-bit PSM representation
-→ categorical residue-property variables
-→ 200-dimensional MCA representation
-```
-
-### Classification branch
-
-```text
-molecular features + kinase features
-→ XGBoost
-→ predicted interaction probability
-```
-
----
-
-## Prediction Output
-
-A typical prediction table may contain:
-
-| Column | Description |
+| Notebook or file pattern | Purpose |
 |---|---|
-| `uniprot_id` | UniProt accession supplied in the input |
-| `standard_smiles` | Standardised SMILES supplied in the input |
-| `classification` | Experimental label, when available |
-| `prediction_score` | Predicted probability of an active interaction |
-| `predicted_class` | Binary prediction based on the selected threshold |
+| `feature_embedding/mol/LSAE_mol_training.ipynb` | Trains the molecular Linear Sparse Autoencoder on Morgan fingerprints and selects the retained latent features. |
+| `feature_embedding/mol/LSAE_mol_load_model_*.ipynb` | Loads a pretrained LSAE and extracts molecular latent features for a particular dataset. The suffix identifies the target dataset or workflow: `KIBA`, `vsds`, `karaman`, `KinSPEC_karaman_selectivity_sim05`, or `full_training_pool`. |
+| `feature_embedding/mol/*.pt` | Pretrained LSAE weights, selected latent-feature indices, and decoder artifacts used during molecular feature extraction and interpretation. |
 
-Example:
+The dataset-specific loading notebooks share the same main procedure but use different input tables and output paths. Select the notebook whose suffix matches the dataset being processed and update its path configuration before running it.
 
-```csv
-uniprot_id,standard_smiles,classification,prediction_score,predicted_class
-P00533,CCOc1ccc2nc(S(N)(=O)=O)sc2c1,1,0.893,1
-P31749,CC(=O)Oc1ccccc1C(=O)O,0,0.127,0
-```
+### 3. Kinase feature embedding
 
-The prediction score can be used to:
+| Notebook | Purpose |
+|---|---|
+| `feature_embedding/Kinase_test_MCA/protein_to_binary_MCA.ipynb` | Converts KLIFS-aligned kinase binding-pocket sequences into binary physicochemical-property features. For 85 pocket positions and 23 residue properties, the initial representation contains 1,955 features. |
+| `feature_embedding/Kinase_test_MCA/MCA_klifs.ipynb` | Fits a 200-dimensional MCA representation, exports kinase coordinates and category metadata, and assesses embedding quality and bootstrap stability. |
 
-- rank candidate compounds for a kinase target;
-- rank possible kinase targets for a compound;
-- evaluate compound-specific kinase selectivity;
-- prioritise compound-kinase pairs for experimental validation.
+The CSV files in `feature_embedding/Kinase_test_MCA/` include the binary kinase representation, the 200-dimensional MCA features, category coordinates/contributions, row quality statistics, and bootstrap-stability results.
 
----
+### 4. Model training
 
-## Reproducibility
+| Notebook | Purpose |
+|---|---|
+| `model_training/KinSPEC_full_data_training_MCA.ipynb` | Tunes and trains the final KinSPEC XGBoost classifier on the full training pool and evaluates it on VSDS. |
+| `model_training/KinSPEC_similarity_band_training_MCA_2.ipynb` | Trains and evaluates models across compound-similarity bands using stratified cross-validation. |
 
-For reproducible results:
+The `model/` directory contains the resulting XGBoost JSON models. Files matching `KinSPEC_MCA_training_band_*_fold*.json` correspond to a similarity band and cross-validation fold; `KinSPEC_full_training_pool_MCA_200D.json` is the full-pool model.
 
-- use the same package versions across experiments;
-- keep random seeds fixed;
-- restart the Jupyter kernel before each complete run;
-- run cells in the documented order;
-- use the same molecular standardisation procedure;
-- preserve the original training and test separation;
-- use the same UniProt-to-KLIFS mapping;
-- use the same LSAE, MCA, and XGBoost model files;
-- do not manually modify intermediate feature tables;
-- record all input and output paths;
-- record dataset versions and download dates.
+### 5. Model evaluation and application
 
----
+| Notebook or file pattern | Purpose |
+|---|---|
+| `model_training/load_KinSPEC_MCA_*.ipynb` | Loads trained KinSPEC models and evaluates them on the dataset named by the suffix, currently `KIBA` or `VSDS`. |
+| `model_training/load_model_KinSPEC_karaman_selectivity_test_MCA*.ipynb` | Applies KinSPEC to the Karaman selectivity benchmark and reports ranking/selectivity metrics such as Spearman correlation, ROC-AUC, NDCG, and BEDROC. The `_ready_to_use` variant produces a streamlined per-molecule output. |
 
-## Important Notes
+### 6. Model interpretation
 
-- KinSPEC is a binary compound-kinase interaction classifier.
-- The protein representation is specific to typical protein kinases.
-- A UniProt accession must match an entry in the kinase feature table.
-- A gene symbol cannot directly replace a UniProt accession.
-- Invalid SMILES strings cannot be converted into Morgan fingerprints.
-- Classification labels must be encoded as `0` and `1`.
-- The activity threshold used to define the labels should be reported.
-- Duplicate compound-target pairs should be removed or reconciled before training.
-- Predictions are computational estimates and do not replace experimental validation.
-- TreeSHAP importance reflects contribution to the model prediction and does not by itself prove a physical molecular interaction.
+| Notebook | Purpose |
+|---|---|
+| `model_interpretability/KinSPEC_interpretability.ipynb` | Uses TreeSHAP to explain molecular and kinase features, maps molecular contributions back to Morgan-fingerprint substructures, and relates kinase contributions to MCA/KLIFS properties. |
+| `model_interpretability/shannon_entropy_statsitics_MCA_2.ipynb` | Quantifies the concentration and diversity of feature contributions using Shannon entropy and statistical analyses. |
 
----
+### 7. Model and dataset transfer utilities
 
-## Citation
+| Notebook | Purpose |
+|---|---|
+| `download_model_dataset.ipynb` | Downloads archived model and dataset resources. |
+| `zenodo_upload_dataset.ipynb` | Uploads prepared resources to Zenodo; this is a maintainer utility and requires Zenodo credentials. |
 
-When using KinSPEC, please cite:
+## Recommended execution order
 
-```bibtex
-@article{wang2026kinspec,
-  title   = {KinSPEC: A Kinase Sequence-Based Prior-Guided Framework for Predicting Compound-Protein Interactions},
-  author  = {Wang, Haoying and Blay, Vincent and Chen, Lin and Chen, Yan-Kai and Zhou, Ruhong and Houston, Douglas R.},
-  journal = {ChemRxiv},
-  year    = {2026},
-  doi     = {10.26434/chemrxiv.15005703/v1}
-}
-```
-
-Preprint:
+For reproducing the complete workflow, run the notebooks in this order:
 
 ```text
-https://chemrxiv.org/doi/full/10.26434/chemrxiv.15005703/v1
+Dataset construction
+  └─> Molecular feature embedding
+       └─> Kinase property encoding
+            └─> MCA kinase embedding
+                 └─> Model training
+                      └─> External evaluation
+                           └─> Model interpretation
 ```
 
----
+If pretrained embeddings and models are used, the earlier training stages can be skipped. For prediction on a new dataset, prepare compound SMILES and supported kinase identifiers, extract molecular features with an `LSAE_mol_load_model_*.ipynb` workflow, match the kinase MCA features, and then follow one of the model-loading notebooks.
 
-## Code and Data
+## Usage notes
 
-GitHub repository:
+- Run notebooks from their repository subdirectory unless their path variables are updated; many relative paths assume this layout.
+- Several notebooks contain machine-specific absolute paths. Change all input, output, checkpoint, and cache paths before execution.
+- Dataset-specific notebooks expect particular column names and row orders. Inspect their configuration cells before substituting a new table.
+- The molecular latent-feature table and the interaction table must remain row-aligned.
+- Kinase identifiers must match the identifiers in the KLIFS reference table.
+- Reproducibility of GPU results can depend on the installed PyTorch, CUDA, XGBoost, and driver versions.
 
-```text
-https://github.com/HaoyingWang1995/KinSPEC
-```
+## Data availability
 
-Associated test data:
-
-```text
-https://zenodo.org/uploads/20558270
-```
-
----
+The VSDS, KIBA, and Karaman evaluation resources, including data entries and embedded molecular features, are available from [Zenodo](https://zenodo.org/uploads/20558270).
 
 ## License
 
-This repository is distributed under the terms provided in the `LICENSE` file.
-
----
-
-## Contact
-
-For questions about KinSPEC, please contact:
-
-**Haoying Wang**  
-University of Edinburgh  
-Email: H.Wang-138@sms.ed.ac.uk
-
-**Douglas R. Houston**  
-University of Edinburgh  
-Email: DouglasR.Houston@ed.ac.uk
+This project is licensed under the [Apache License 2.0](LICENSE).
