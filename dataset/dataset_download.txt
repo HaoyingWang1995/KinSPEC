@@ -1,1 +1,0 @@
-The evaluation dataset of VSDS/KIBA/Karaman (including data entries and embedded mol features) can be downloaded from https://zenodo.org/uploads/20558270
