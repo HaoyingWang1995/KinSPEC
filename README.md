@@ -51,8 +51,8 @@ The repository includes `download_model_dataset.ipynb`, which downloads the rele
 
 The referenced Zenodo records are:
 
-- Models: [Zenodo record 21739888](https://zenodo.org/records/21739888)
-- Datasets: [Zenodo record 20558270](https://zenodo.org/records/20558270)
+- Models: https://doi.org/10.5281/zenodo.21739888
+- Datasets: https://doi.org/10.5281/zenodo.20558270
 
 ## Notebook guide
 
