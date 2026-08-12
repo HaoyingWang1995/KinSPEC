@@ -152,17 +152,6 @@ dataset/Karaman_Kinase_selectivity_filtered_withseq.csv
 
 If the released processed features and models are used, dataset construction, LSAE training, MCA fitting, and XGBoost training can be skipped.
 
-## Important usage notes
-
-- Several notebooks contain machine-specific absolute paths. Update all input, output, checkpoint, and cache paths before execution.
-- Relative paths generally assume that a notebook is run from its own repository subdirectory.
-- Check the dataset and feature filenames in the configuration cells; some exploratory cells may retain older output names.
-- Interaction tables and their molecular latent-feature tables must have identical row ordering.
-- Kinase identifiers and KLIFS strings must match the supplied kinase reference and MCA tables.
-- The XGBoost feature order must remain molecular latent features followed by the 200 kinase MCA features.
-- GPU reproducibility can depend on PyTorch, CUDA, XGBoost, and driver versions.
-- `zenodo_upload_dataset.ipynb` is a maintainer utility and requires valid Zenodo credentials.
-
 ## License
 
 KinSPEC is released under the [Apache License 2.0](LICENSE).
