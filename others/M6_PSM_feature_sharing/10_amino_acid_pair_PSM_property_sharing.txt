@@ -1,0 +1,17 @@
+0 shared groups (61 pairs):
+A-D, A-N, C-D, C-E, C-K, C-L, C-R, D-F, D-M, D-T, D-V, D-W, D-Y, E-F, E-G, E-I, E-P, E-S, E-T, E-V, E-W, E-Y, F-G, F-H, F-K, F-N, F-Q, F-S, G-K, G-M, G-R, H-I, H-P, H-V, H-W, I-K, I-Q, I-R, I-S, K-P, K-S, K-T, K-V, K-W, K-Y, L-S, L-T, L-Y, M-N, M-S, M-T, M-Y, N-V, N-W, P-Q, P-R, Q-V, Q-W, R-S, R-T, R-V
+
+1 shared groups (67 pairs):
+A-C, A-E, A-F, A-H, A-K, A-Q, A-R, A-S, A-T, A-Y, C-F, C-H, C-I, C-M, C-N, C-Q, D-G, D-H, D-I, D-K, D-L, D-P, D-Q, D-R, D-S, E-L, E-N, F-P, F-R, F-T, G-H, G-I, G-L, G-Q, G-V, G-W, H-L, H-S, H-T, H-Y, I-N, I-P, I-T, I-Y, K-L, K-N, L-N, L-P, L-Q, L-R, L-W, M-P, M-R, M-W, N-P, N-R, N-T, N-Y, P-Y, Q-S, Q-T, Q-Y, R-W, R-Y, S-V, S-W, V-Y
+
+2 shared groups (33 pairs):
+A-I, A-M, A-P, A-V, A-W, C-G, C-P, C-V, C-W, E-M, E-R, F-L, F-M, G-N, G-P, G-T, G-Y, H-M, H-N, I-M, I-W, K-M, M-Q, M-V, N-S, P-T, P-V, P-W, Q-R, S-Y, T-V, T-W, V-W
+
+3 shared groups (20 pairs):
+A-G, A-L, C-S, C-Y, D-E, D-N, E-H, E-K, E-Q, F-I, F-V, F-Y, G-S, H-R, K-Q, L-M, L-V, N-Q, P-S, T-Y
+
+4 shared groups (9 pairs):
+C-T, F-W, H-K, H-Q, I-L, I-V, K-R, S-T, W-Y
+
+5 shared groups (0 pairs):
+

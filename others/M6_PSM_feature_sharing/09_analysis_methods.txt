@@ -1,0 +1,76 @@
+Analysis methods
+================
+
+Inputs
+------
+Sequence/KLIFS source: /home/s1856122/KinSPEC_final/feature_embedding/Kinase_test_MCA/human_482_typical_kinase_1955bit.csv
+Columns used: kinase_name, UniProt_ID, KLIFS, Binary_string.
+Parsed binary matrix: /home/s1856122/KinSPEC_final/feature_embedding/Kinase_test_MCA/human_482_typical_kinase_1955bit_onehot.csv
+The parsed matrix is headerless; it has no identifier columns. Its row order was mapped to the sequence CSV and every row was verified against both Binary_string and a fresh encoding of KLIFS.
+AA-to-PSM source: /home/s1856122/KinSPEC_final/feature_embedding/Kinase_test_MCA/protein_to_binary_MCA.ipynb
+Feature/group label source: /home/s1856122/KinSPEC_final/feature_embedding/Kinase_test_MCA/MCA_klifs.ipynb
+
+Mapping provenance
+------------------
+The conversion notebook contains the exact ordered 23-bit mapping for 20 amino acids and '-'. It does not contain human-readable bit names or five-group labels. The labels below are those used by the companion MCA notebook, and the 8/3/4/3/5 partition was verified to have exactly one active bit per non-gap amino acid.
+
+23 features in exact bit order
+------------------------------
+  1. side_chain:Aliphatic
+  2. side_chain:Aromatic
+  3. side_chain:Sulfur
+  4. side_chain:Imino
+  5. side_chain:Amide
+  6. side_chain:Hydroxyl
+  7. side_chain:Acidic_sc
+  8. side_chain:Basic_sc
+  9. tertiary_structure:Exposed
+  10. tertiary_structure:Buried
+  11. tertiary_structure:Intermediate
+  12. functional:Acidic_fn
+  13. functional:Basic_fn
+  14. functional:Hydrophobic
+  15. functional:Polar
+  16. secondary_structure:alpha
+  17. secondary_structure:beta
+  18. secondary_structure:coil
+  19. size:Tiny
+  20. size:Small
+  21. size:Medium
+  22. size:Large
+  23. size:VeryLarge
+
+Group-to-bit mapping
+--------------------
+  side_chain: bits 1-8: Aliphatic, Aromatic, Sulfur, Imino, Amide, Hydroxyl, Acidic_sc, Basic_sc
+  tertiary_structure: bits 9-11: Exposed, Buried, Intermediate
+  functional: bits 12-15: Acidic_fn, Basic_fn, Hydrophobic, Polar
+  secondary_structure: bits 16-18: alpha, beta, coil
+  size: bits 19-23: Tiny, Small, Medium, Large, VeryLarge
+
+Gap handling
+------------
+The '-' mapping is 00000000000000000000000. Gaps are excluded from all position-aware pair denominators if either kinase is gapped. They remain 23 zeroes in global 1955-bit Jaccard and Hamming calculations, exactly as in the input representation.
+
+Pairwise metrics
+----------------
+All C(482,2) = 115,921 unordered kinase pairs were evaluated exactly.
+Global active-bit Jaccard = active-bit intersection / active-bit union over 1955 bits.
+Global Hamming agreement = equal binary bits / 1955; shared zeroes contribute.
+Position PSM Jaccard = active-bit intersection / union for each jointly non-gap position, averaged over valid positions.
+AA identity = identical non-gap residues / jointly non-gap positions.
+Matching-group quantities compare the five categorical group states at jointly non-gap positions.
+Position-level residue comparisons include all unordered kinase pairs jointly non-gap at that position.
+The low-identity/high-sharing rank score is (1 - AA pair identity fraction) * mean matching groups among different-AA pairs / 5.
+
+Complete-vector interpretation
+------------------------------
+Uniqueness of a complete multivariate feature vector does not imply target-identity encoding. The relevant question is whether the constituent aligned physicochemical states are recurrent and shared across kinases.
+
+Software
+--------
+Python 3.13.9
+numpy 2.3.5
+pandas 2.3.3
+scipy 1.16.3
+matplotlib 3.10.6

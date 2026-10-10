@@ -1,0 +1,123 @@
+{
+  "sequence_csv": "/home/s1856122/KinSPEC_final/feature_embedding/Kinase_test_MCA/human_482_typical_kinase_1955bit.csv",
+  "onehot_csv": "/home/s1856122/KinSPEC_final/feature_embedding/Kinase_test_MCA/human_482_typical_kinase_1955bit_onehot.csv",
+  "conversion_notebook": "/home/s1856122/KinSPEC_final/feature_embedding/Kinase_test_MCA/protein_to_binary_MCA.ipynb",
+  "feature_label_source": "/home/s1856122/KinSPEC_final/feature_embedding/Kinase_test_MCA/MCA_klifs.ipynb",
+  "sequence_csv_rows": 482,
+  "onehot_csv_rows": 482,
+  "sequence_csv_identifier_columns": [
+    "kinase_name",
+    "UniProt_ID"
+  ],
+  "onehot_csv_identifier_columns": [],
+  "entry_matching_method": "row order; verified against Binary_string and notebook-derived encoding",
+  "all_482_entries_match_exactly": true,
+  "KLIFS_length_distribution": {
+    "85": 482
+  },
+  "all_KLIFS_sequences_have_85_positions": true,
+  "parsed_binary_feature_columns": 1955,
+  "expected_85_x_23_features": 1955,
+  "all_parsed_values_are_0_or_1": true,
+  "PSM_feature_names_in_bit_order": [
+    "side_chain:Aliphatic",
+    "side_chain:Aromatic",
+    "side_chain:Sulfur",
+    "side_chain:Imino",
+    "side_chain:Amide",
+    "side_chain:Hydroxyl",
+    "side_chain:Acidic_sc",
+    "side_chain:Basic_sc",
+    "tertiary_structure:Exposed",
+    "tertiary_structure:Buried",
+    "tertiary_structure:Intermediate",
+    "functional:Acidic_fn",
+    "functional:Basic_fn",
+    "functional:Hydrophobic",
+    "functional:Polar",
+    "secondary_structure:alpha",
+    "secondary_structure:beta",
+    "secondary_structure:coil",
+    "size:Tiny",
+    "size:Small",
+    "size:Medium",
+    "size:Large",
+    "size:VeryLarge"
+  ],
+  "PSM_groups_in_bit_order": {
+    "side_chain": [
+      "Aliphatic",
+      "Aromatic",
+      "Sulfur",
+      "Imino",
+      "Amide",
+      "Hydroxyl",
+      "Acidic_sc",
+      "Basic_sc"
+    ],
+    "tertiary_structure": [
+      "Exposed",
+      "Buried",
+      "Intermediate"
+    ],
+    "functional": [
+      "Acidic_fn",
+      "Basic_fn",
+      "Hydrophobic",
+      "Polar"
+    ],
+    "secondary_structure": [
+      "alpha",
+      "beta",
+      "coil"
+    ],
+    "size": [
+      "Tiny",
+      "Small",
+      "Medium",
+      "Large",
+      "VeryLarge"
+    ]
+  },
+  "mapping_characters": [
+    "A",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "K",
+    "L",
+    "M",
+    "N",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "V",
+    "W",
+    "Y",
+    "-"
+  ],
+  "gap_encoding": "00000000000000000000000",
+  "gap_is_23_zeroes": true,
+  "group_partition_one_active_bit_per_non_gap_AA": true,
+  "MCA_label_constants_match_script": true,
+  "independently_checked_row_indices_zero_based": [
+    0,
+    120,
+    241,
+    361,
+    481
+  ],
+  "sample_rows_reproduce_exactly": true,
+  "all_rows_reproduce_exactly": true,
+  "whole_vector_unique_count": 481,
+  "whole_vector_duplicate_row_count": 1,
+  "feature_label_provenance_note": "protein_to_binary_MCA.ipynb defines the exact ordered 23-bit mapping but contains no individual feature names or five-group labels. The labels and contiguous 8/3/4/3/5 grouping are taken from companion MCA_klifs.ipynb and validated against every amino-acid bit string.",
+  "validation_status": "PASS",
+  "fatal_errors": []
+}

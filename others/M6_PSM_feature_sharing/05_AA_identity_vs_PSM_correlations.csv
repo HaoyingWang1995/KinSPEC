@@ -1,0 +1,11 @@
+outcome,method,n_pairs,correlation,p_value
+global_PSM_jaccard,Pearson,115921,0.9300234828053748,0.0
+global_PSM_jaccard,Spearman,115921,0.8920603876691718,0.0
+mean_position_PSM_jaccard,Pearson,115921,0.9635760961050374,0.0
+mean_position_PSM_jaccard,Spearman,115921,0.93836605245444,0.0
+mean_matching_PSM_groups,Pearson,115921,0.9357261266920895,0.0
+mean_matching_PSM_groups,Spearman,115921,0.8940991092717936,0.0
+fraction_positions_match_ge3_groups,Pearson,115921,0.8597008525454568,0.0
+fraction_positions_match_ge3_groups,Spearman,115921,0.7918280263313228,0.0
+fraction_positions_match_5_groups,Pearson,115921,0.9999999999999938,0.0
+fraction_positions_match_5_groups,Spearman,115921,0.9999999999999998,0.0
