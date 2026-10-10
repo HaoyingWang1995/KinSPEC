@@ -2,15 +2,6 @@
 
 KinSPEC is a machine-learning workflow for compound–kinase interaction prediction and kinase-selectivity analysis. It combines molecular features from a Linear Sparse Autoencoder (LSAE), kinase binding-pocket features derived from KLIFS-aligned sequences, and an XGBoost classifier. The repository contains training and evaluation notebooks, feature-embedding resources, interpretation scripts, baseline wrappers, and supplementary analyses. Large processed datasets and predictive model archives are distributed separately.
 
-## Release status
-
-This guide describes the GitHub structure inspected at commit `d02a190b034d78a58fe6a041b9f9ead9eddd6223` on 10 October 2026. The root `kinspec_paths.py` has been restored and matches the corrected local source byte for byte; notebook path setup now succeeds. The PSM input manifest has also been restored and matches the local source. Its checker verified all 84 inputs against the prepared local dataset/model directory. The following supplementary files are still recommended for the release:
-
-- **PSM `requirements.txt` and documentation:** the matching dependency pins and usage guide should accompany `others/pure_PSM_workflow/`. The manifest is already included and describes 22 CSV inputs and 62 model JSON files.
-- **Optional `check_corrected_paths.py` at the repository root:** the corrected source distribution's project-wide preflight checker. It imports the PSM package through the local directory name `pure_PSM_workflows`; adapt that import path if retaining GitHub's singular `pure_PSM_workflow` name.
-
-The GitHub supplementary analysis directory is **`others/pure_PSM_workflow/`** (singular). The corrected local source uses `others/pure_PSM_workflows/` (plural). Commands below use the GitHub name. The 67 uploaded files in that directory, including the input manifest, match their local counterparts byte for byte. Dependency pins, documentation, and historical audit metadata remain outside the inspected snapshot.
-
 ## Feature pipeline
 
 1. Generate radius-2, 4,096-bit Morgan fingerprints for compounds.
