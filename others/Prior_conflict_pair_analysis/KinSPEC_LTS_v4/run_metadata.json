@@ -1,0 +1,30 @@
+{
+  "model_family": "KinSPEC_LTS_v4",
+  "models": [
+    "/home/s1856122/KinSPEC_final/model/KinSPEC_LTS_Karaman_sim05_training_pool_MCA_200D_v4.json"
+  ],
+  "train_csv": "/home/s1856122/KinSPEC_final/dataset/KinSPEC_LTS_merged_4datasets_deduplicated_no_karaman_sim0.5.csv",
+  "inputs_sha256": {
+    "/home/s1856122/KinSPEC_final/dataset/KinSPEC_LTS_merged_4datasets_deduplicated_no_karaman_sim0.5.csv": "77ff56628a3762550f22577dd7c6d9ec7870b54d2c8651114409be10e5c68e82",
+    "/home/s1856122/KinSPEC_final/dataset/Karaman_Kinase_selectivity_filtered_withseq.csv": "c8ab6fd129a414473bb53e7bf9748e89f02d66b5ad9a01269bd61131bff4521d",
+    "/home/s1856122/KinSPEC_final/dataset/Karaman_10_50_filtered_SAE_latent_top95_features_from_merge_v4.csv": "e15f8b66396897c1a86797f9b2c6720939cfaa1bb95ea202cf0fa70cc2abda8a",
+    "/home/s1856122/KinSPEC_final/feature_embedding/Kinase_test_MCA/human_482_typical_kinase_1955bit.csv": "bfd07fa55cf612181bf6309741b98fd4ca7f5e1c930e63e48e272e64638d127b",
+    "/home/s1856122/KinSPEC_final/feature_embedding/Kinase_test_MCA/MCA_klifs_482_200D_features.csv": "ff43d7c83ca44c8433a6ffdcc8cef2bed582dff226d3d658c427fd274aab5073",
+    "/home/s1856122/KinSPEC_final/model/KinSPEC_LTS_Karaman_sim05_training_pool_MCA_200D_v4.json": "f1f83068844f4b1e21920a312dd610b6232812e777e6419b6287301ae69656de"
+  },
+  "feature_shape": [
+    10298,
+    617
+  ],
+  "xgboost_version": "3.0.0",
+  "numpy_version": "1.26.4",
+  "pandas_version": "2.3.0",
+  "n_models": 1,
+  "missing_training_targets": [
+    "Q15349-2",
+    "Q15418-2"
+  ],
+  "validation_auc_checks": 74,
+  "training_prior": "active training rows / all training rows per KLIFS, mapped to UniProt",
+  "aggregation": "Mean across model folds within molecule, then equal-weight mean across molecules; LTS has one model, fold=1 is only an identifier"
+}

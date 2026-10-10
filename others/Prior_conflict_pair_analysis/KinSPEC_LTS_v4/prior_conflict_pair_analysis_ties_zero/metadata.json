@@ -1,0 +1,17 @@
+{
+  "predictions": "/home/s1856122/KinSPEC_review/Prior_conflict_pair_analysis_v4/KinSPEC_LTS_v4/model_predictions_all_folds.csv",
+  "predictions_sha256": "ea549108b519c96defbf8e78ef6a784d5a67868530254b3ea18520dd6e6f54d6",
+  "baseline": "/home/s1856122/KinSPEC_review/Prior_conflict_pair_analysis_v4/KinSPEC_LTS_v4/karaman_activity_rate_ranked_long.csv",
+  "baseline_sha256": "2d261fe9d01a020be140af502faf791dd1331e3ca7fb1e4a214bbfb78ff9ade0",
+  "folds": [
+    1
+  ],
+  "conflict": "label(active)=1, label(inactive)=0, prior(active)<prior(inactive)",
+  "tie_credit": 0.0,
+  "primary_scope": "both targets have observed training activity rates",
+  "aggregation": "Average metrics across folds within each molecule, then average molecules equally",
+  "uncertainty": "Percentile bootstrap resampling molecules after fold averaging; conditional on these targets, dataset and models; does not account for shared-target dependence",
+  "bootstrap_repetitions": 10000,
+  "seed": 20260923,
+  "interpretation": "Conflict baseline accuracy is zero by definition. Its correction rate is descriptive, not an independent superiority test or proof of molecule-specific learning. Concordant-pair damage and all-pair accuracy are reported alongside it."
+}
