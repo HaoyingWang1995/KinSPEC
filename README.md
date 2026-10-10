@@ -1,4 +1,4 @@
-# KinSPEC (v4)
+# KinSPEC
 
 KinSPEC is a machine-learning workflow for compound–kinase interaction prediction and kinase-selectivity analysis. It combines molecular features from a Linear Sparse Autoencoder (LSAE), kinase binding-pocket features derived from KLIFS-aligned sequences, and an XGBoost classifier. The repository contains training and evaluation notebooks, feature-embedding resources, interpretation scripts, baseline wrappers, and supplementary analyses. Large processed datasets and predictive model archives are distributed separately.
 
