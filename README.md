@@ -62,10 +62,10 @@ Training notebooks commonly configure CUDA. Review their configuration cells bef
 
 ## Download datasets and predictive weights
 
-Download the processed data from the [Hugging Face dataset repository](https://huggingface.co/datasets/Lumineb/KinSPEC) and predictive weights from the [Hugging Face model repository](https://huggingface.co/Lumineb/KinSPEC). The repository includes separate download helpers for each. If access requires authentication, run `hf auth login` with an account that has access.
+Download the processed data from the [Hugging Face dataset repository](https://huggingface.co/datasets/Lumineb/KinSPEC) and predictive weights from the [Hugging Face model repository](https://huggingface.co/Lumineb/KinSPEC). The repository includes separate download helpers for each. Reviewers can access both repositories using the token provided in the rebuttal. Run `hf auth login` and enter that token when prompted before using the download helpers.
 
 ```bash
-# Authenticate when repository access requires it.
+# For reviewers: enter the token provided in the rebuttal when prompted.
 hf auth login
 
 # Inspect accessible files before selecting downloads.
@@ -118,7 +118,7 @@ Start Jupyter from the repository root and execute each notebook's first path-se
 | Notebook in `model_training/` | Purpose |
 |---|---|
 | `KinSPEC_full_data_training_MCA_v4.ipynb` | Tune/train the full-pool model and evaluate on VSDS |
-| `load_KinSPEC_similarity_band_training_MCA_v4.ipynb` | Tune/train five-fold similarity-band models; despite its prefix, this performs training |
+| `load_KinSPEC_similarity_band_training_MCA_v4.ipynb` | Train five-fold similarity-band models using hyperparameters selected on the full training pool. |
 | `KinSPEC_similarity_band_training_MCA_default_param_v4.ipynb` | Train/evaluate default-parameter band models |
 | `KinSPEC_LTS_Karaman_sim05_training_MCA_v4.ipynb` | Train the main LTS model |
 | `KinSPEC_LTS_Karaman_sim05_training_MCA_v4_onehot.ipynb` | Train the LTS one-hot/MCA variant |
@@ -152,7 +152,14 @@ The notebook writes selectivity outputs under `evaluation_result/Karaman_MAC_res
 
 ## Model interpretation
 
-The main workflow is [KinSPEC_interpretability_v9.py](model_interpretability/KinSPEC_interpretability_v9.py). It requires molecular and kinase background CSVs under `model_interpretability/background_data/`. Supply the matching backgrounds or use [prepare_interpretability_backgrounds.py](model_interpretability/prepare_interpretability_backgrounds.py) to generate them from the training resources, checking its input and output configuration first.
+The main workflow is [KinSPEC_interpretability_v9.py](model_interpretability/KinSPEC_interpretability_v9.py). Before running it, place the molecular and kinase background files in `model_interpretability/background_data/` with the following structure:
+
+```text
+model_interpretability/
+└── background_data/
+    ├── training_unique_morgan_fingerprints.csv
+    └── training_unique_kinases_1955bit_MCA200.csv
+```
 
 Once the models and background inputs are available:
 
@@ -182,13 +189,20 @@ python model_interpretability/KinSPEC_kernelshap_rf.py \
 | `run_history.py` | Historical importance, stability, and exploratory analyses |
 | `run_tables.py` | Export fixed historical SI values, rather than newly computed summaries |
 
-Default inputs are **22 CSVs directly in `dataset/` plus 31 MCA and 31 PSM JSON models** in `model/KinSPEC/` and `model/PSM_raw/`. [release_input_manifest.csv](others/pure_PSM_workflow/release_input_manifest.csv) lists the expected paths and sizes. The two Karaman result CSVs supplied in this code directory must also be available at their expected `dataset/` paths. Seven additional PSM/MCA feature tables complete the workflow-specific inputs.
+Default inputs are **22 CSVs directly in `dataset/` plus 31 MCA and 31 PSM JSON models** in `model/KinSPEC/` and `model/PSM_raw/`. [release_input_manifest.csv](others/pure_PSM_workflow/release_input_manifest.csv) lists the expected paths and sizes. After downloading the datasets and extracting the matching model archives, copy the seven PSM/MCA feature tables from `feature_embedding/Kinase_test_MCA/` and the two Karaman result CSVs from `others/pure_PSM_workflow/` into their expected `dataset/` locations with `--copy-existing`.
 
-After obtaining the inputs listed in the included manifest:
+`prepare_release_inputs.py` without arguments only checks files. `--copy-existing` copies available source files to missing destinations, retains the source files, and does not overwrite existing destinations. It does not download files. Prepare and check the inputs before starting an analysis:
 
 ```bash
 cd others/pure_PSM_workflow
+
+# Copy the nine supplementary CSVs into dataset/ and check all 84 inputs.
+python prepare_release_inputs.py --copy-existing
+
+# Check paths and sizes without copying files.
 python prepare_release_inputs.py
+
+# Inspect the analysis and its required inputs, then run selected workflows.
 python run_attribution.py --dry-run
 python run_attribution.py --check
 python run_performance.py --device cpu
