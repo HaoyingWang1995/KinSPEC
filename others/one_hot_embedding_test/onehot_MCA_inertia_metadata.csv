@@ -1,0 +1,2 @@
+n_samples,n_variables_Q,n_categories_J,n_fitted_components,correction_threshold_1_over_Q,n_axes_above_threshold,raw_total_inertia,benzecri_total_inertia,greenacre_adjusted_total_inertia,n_constant_positions
+482,85,1390,481,0.011764705882352941,272,15.352941176470589,1.1054970061756173,1.2226981050321306,0
