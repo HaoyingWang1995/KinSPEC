@@ -1,0 +1,117 @@
+[
+  {
+    "path": "dataset/data_split_from_merged_true_fold/band_0.10_0.50/train_with_smiles_protein_seq.csv",
+    "bytes": 504479030,
+    "sha256": "3e530bd03330e6c6fe7e157116cb04460eda502b27e8fdcf4970f86c3152216b"
+  },
+  {
+    "path": "dataset/VSDS_truedecoy_integrated_data_with_protein_seq.csv",
+    "bytes": 251225602,
+    "sha256": "5f4380d989fb7cd7609345cafbc48522c611cfc8f558724c628a82ea5b761f91"
+  },
+  {
+    "path": "feature_embedding/mol/LSAE_chembl_1900k_full_dataset_v4_model.pt",
+    "bytes": 33577885,
+    "sha256": "9773b0c5bf29cb4316681ac77238c5330977900b4b00b88aaf8c53c90a5178eb"
+  },
+  {
+    "path": "feature_embedding/mol/LSAE_chembl_1900k_full_dataset_v4_topk_of1024d_top99.pt",
+    "bytes": 10212,
+    "sha256": "7997992865bc6f2aed4ddf2babbeb573ea201c1e415759ea9725dc5605bb8c1b"
+  },
+  {
+    "path": "feature_embedding/Kinase_test_MCA/MCA_klifs_482_200D_features.csv",
+    "bytes": 1997425,
+    "sha256": "ff43d7c83ca44c8433a6ffdcc8cef2bed582dff226d3d658c427fd274aab5073"
+  },
+  {
+    "path": "feature_embedding/Kinase_test_MCA/human_482_typical_kinase_1955bit.csv",
+    "bytes": 991826,
+    "sha256": "bfd07fa55cf612181bf6309741b98fd4ca7f5e1c930e63e48e272e64638d127b"
+  },
+  {
+    "path": "model/Morgan_raw/xgboost_SPECTRA_ready_to_use_with_VSDS_482_kinases_4096bit_morgan_2.json",
+    "bytes": 169515870,
+    "sha256": "9ecc012e7885d073898539265b643c121d18cb6760a0310d74e6d3490412b97c"
+  },
+  {
+    "path": "model/KinSPEC/KinSPEC_full_training_pool_MCA_200D_v4.json",
+    "bytes": 175586642,
+    "sha256": "58260a16ce265978930dcdc304933023fcb25a9e01ade936bacbe8b9b29be255"
+  },
+  {
+    "path": "dataset/data_split_from_merged_true_fold/band_0.10_0.50/train_valid_split/train_valid_1/train.csv",
+    "bytes": 403534096,
+    "sha256": "d3a61ce0a6bcf60c87e86c9d08844f6ea0b9afd57e4d9c72911bd708cb6f7656"
+  },
+  {
+    "path": "model/Morgan_raw/KinSPEC_MCA_training_band_10_50_fold1_rawmorgan_model_v4.json",
+    "bytes": 34370882,
+    "sha256": "e2f16b89dd16398323467f08f2fdc2ce8b6541eb09f47f035ed0318fd254ae8b"
+  },
+  {
+    "path": "model/KinSPEC/KinSPEC_MCA_training_band_10_50_fold1_model_v4.json",
+    "bytes": 36958397,
+    "sha256": "f126d71179675a68a20866c24dce2b256ac36f0aafbe17af21bf6cb096988361"
+  },
+  {
+    "path": "dataset/data_split_from_merged_true_fold/band_0.10_0.50/train_valid_split/train_valid_2/train.csv",
+    "bytes": 403529711,
+    "sha256": "7f044edf0739ffc1a63a2c0bfbd74ef3dabcf0357a8feb504a34ea9b703a6944"
+  },
+  {
+    "path": "model/Morgan_raw/KinSPEC_MCA_training_band_10_50_fold2_rawmorgan_model_v4.json",
+    "bytes": 29315379,
+    "sha256": "338856b5fa01ba16897866cebe6d984d69105201b35c0357a93c35d8c9d86760"
+  },
+  {
+    "path": "model/KinSPEC/KinSPEC_MCA_training_band_10_50_fold2_model_v4.json",
+    "bytes": 36948427,
+    "sha256": "577644d2ff09b887ee430f618504edbcdda75f5ad23d423a511807d9309e9df3"
+  },
+  {
+    "path": "dataset/data_split_from_merged_true_fold/band_0.10_0.50/train_valid_split/train_valid_3/train.csv",
+    "bytes": 403505519,
+    "sha256": "4892d1d67260dea93f0033b4f2ec137f06d8f5032917e8543b7b80a3814d71d5"
+  },
+  {
+    "path": "model/Morgan_raw/KinSPEC_MCA_training_band_10_50_fold3_rawmorgan_model_v4.json",
+    "bytes": 33284240,
+    "sha256": "8acb13549db46de94bc0df60a1bcd7fa29c48be3c9178f0881b32cbcfb6cbb69"
+  },
+  {
+    "path": "model/KinSPEC/KinSPEC_MCA_training_band_10_50_fold3_model_v4.json",
+    "bytes": 36514656,
+    "sha256": "0505202df1c70c9c9ed8b31dc7b6eb34307cf8c64f4c0805830cd2dff7544b58"
+  },
+  {
+    "path": "dataset/data_split_from_merged_true_fold/band_0.10_0.50/train_valid_split/train_valid_4/train.csv",
+    "bytes": 403569168,
+    "sha256": "6cb74f07e7107d79b105e472cb6877f96bc6f2f284b8e2a8365959ab2556a0dd"
+  },
+  {
+    "path": "model/Morgan_raw/KinSPEC_MCA_training_band_10_50_fold4_rawmorgan_model_v4.json",
+    "bytes": 33498059,
+    "sha256": "59aff03a660c2dde95c32d030dc805a6c2b084b4aeb94c403d03d8014fb18424"
+  },
+  {
+    "path": "model/KinSPEC/KinSPEC_MCA_training_band_10_50_fold4_model_v4.json",
+    "bytes": 36474327,
+    "sha256": "871924cc1001382fd9c0e14730a4083f11e34f09da5a4e6479d2772ec465368a"
+  },
+  {
+    "path": "dataset/data_split_from_merged_true_fold/band_0.10_0.50/train_valid_split/train_valid_5/train.csv",
+    "bytes": 403412121,
+    "sha256": "b60454c66a3d54ca04f10ac10c7d7b3e68eac545e30919cf3a03686a50226900"
+  },
+  {
+    "path": "model/Morgan_raw/KinSPEC_MCA_training_band_10_50_fold5_rawmorgan_model_v4.json",
+    "bytes": 32948062,
+    "sha256": "879a4f5b908579cf510c798631e8595be331ff078dd9c6ea46dc442dd89e7aaf"
+  },
+  {
+    "path": "model/KinSPEC/KinSPEC_MCA_training_band_10_50_fold5_model_v4.json",
+    "bytes": 36431181,
+    "sha256": "a675e9d0724fb2d8b8def9884b87f6f2d6aa5935d05432b602fb2c601b9fd7c7"
+  }
+]

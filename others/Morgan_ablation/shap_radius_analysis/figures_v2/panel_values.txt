@@ -1,0 +1,45 @@
+=== panels A/B: EF across six bands (5-fold mean +- sd) ===
+
+EF0.5%
+  band               raw Morgan                LSAE     diff   n/5
+  10-50          4.986 +-0.322        2.510 +-0.516     -2.476   0/5
+  20-60          6.190 +-0.313        3.313 +-0.608     -2.878   0/5
+  30-70          5.521 +-0.392        4.517 +-0.205     -1.004   0/5
+  40-80          5.487 +-0.663        5.554 +-0.275     +0.067   3/5
+  50-90          6.491 +-0.888        5.722 +-0.806     -0.770   1/5
+  60-100         6.023 +-0.615        5.789 +-0.550     -0.234   2/5
+
+EF1.0%
+  band               raw Morgan                LSAE     diff   n/5
+  10-50          3.239 +-0.171        2.655 +-0.423     -0.584   1/5
+  20-60          4.057 +-0.112        2.705 +-0.394     -1.352   0/5
+  30-70          4.007 +-0.349        3.239 +-0.091     -0.768   0/5
+  40-80          3.823 +-0.341        3.807 +-0.226     -0.017   2/5
+  50-90          5.326 +-0.415        5.026 +-0.331     -0.301   0/5
+  60-100         4.825 +-0.315        4.608 +-0.499     -0.217   1/5
+
+=== panel C: radius-0 enrichment (mean [min-max]) ===
+  top 10: 18.2x [18.2-18.2]
+  top 20: 18.2x [18.2-18.2]
+  top 50: 18.6x [16.4-20.0]
+
+=== panel D  recovered from the 37 positions alone (% of full-fingerprint score) ===
+  Raw Morgan high-scoring decoys           73.1% +- 2.6
+  Raw Morgan high-scoring actives          69.4% +- 2.4
+  LSAE high-scoring decoys                 13.1% +- 1.6
+  LSAE high-scoring actives                13.1% +- 2.0
+
+=== panel E  retained after deleting them (% of full-fingerprint score) ===
+  Raw Morgan high-scoring decoys           14.5% +- 2.2
+  Raw Morgan high-scoring actives          13.9% +- 2.1
+  LSAE high-scoring decoys                 54.1% +- 2.8
+  LSAE high-scoring actives                52.1% +- 2.1
+
+=== underlying absolute scores (5-fold mean +- sd) ===
+  Raw Morgan high-scoring decoys           full 0.950+-0.005  keep37 0.694+-0.021  del37 0.138+-0.021  allzero 0.012
+  Raw Morgan high-scoring actives          full 0.816+-0.008  keep37 0.567+-0.021  del37 0.114+-0.017  allzero 0.020
+  LSAE high-scoring decoys                 full 0.783+-0.008  keep37 0.103+-0.012  del37 0.423+-0.025  allzero 0.022
+  LSAE high-scoring actives                full 0.565+-0.013  keep37 0.074+-0.011  del37 0.295+-0.012  allzero 0.024
+
+=== panel F ===
+  raw Morgan 0.4467+-0.0085   LSAE 0.5339+-0.0096   LSAE higher in 5/5 folds

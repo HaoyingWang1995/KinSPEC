@@ -1,0 +1,63 @@
+{
+  "numpy": "1.26.4",
+  "xgboost": "3.0.0",
+  "checks": [
+    {
+      "model": "raw Morgan",
+      "metric": "AUROC",
+      "recomputed": 0.66361050990264,
+      "historical": 0.66361050990264,
+      "difference": 0.0
+    },
+    {
+      "model": "raw Morgan",
+      "metric": "BEDROC",
+      "recomputed": 0.13651026757061477,
+      "historical": 0.1365102675706147,
+      "difference": 5.551115123125783e-17
+    },
+    {
+      "model": "LSAE",
+      "metric": "AUROC",
+      "recomputed": 0.6567125375116687,
+      "historical": 0.6567151101042075,
+      "difference": -2.5725925387742876e-06
+    },
+    {
+      "model": "LSAE",
+      "metric": "BEDROC",
+      "recomputed": 0.12484709278989461,
+      "historical": 0.1248706542487595,
+      "difference": -2.3561458864881923e-05
+    },
+    {
+      "model": "raw Morgan",
+      "metric": "BEDROC_lo",
+      "recomputed": 0.11467296777987322,
+      "historical": 0.1146729677798732,
+      "difference": 2.7755575615628914e-17
+    },
+    {
+      "model": "raw Morgan",
+      "metric": "BEDROC_hi",
+      "recomputed": 0.15791638825570262,
+      "historical": 0.1579163882557026,
+      "difference": 2.7755575615628914e-17
+    },
+    {
+      "model": "LSAE",
+      "metric": "BEDROC_lo",
+      "recomputed": 0.10294564877793053,
+      "historical": 0.1029634408634079,
+      "difference": -1.779208547737776e-05
+    },
+    {
+      "model": "LSAE",
+      "metric": "BEDROC_hi",
+      "recomputed": 0.14551939614816767,
+      "historical": 0.1455443057693971,
+      "difference": -2.4909621229418644e-05
+    }
+  ],
+  "max_abs_difference": 2.4909621229418644e-05
+}

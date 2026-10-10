@@ -1,0 +1,16 @@
+training-pool models on VSDS-VD
+  raw Morgan : xgboost_SPECTRA_ready_to_use_with_VSDS_482_kinases_4096bit_morgan_2.json
+  LSAE       : KinSPEC_full_training_pool_MCA_200D_v4.json
+  bootstrap  : 1000 valid replicates of 1000 (seed 42)
+metric                    raw Morgan  [95% CI]                      LSAE  [95% CI]
+AUROC                 0.6636 [0.6471, 0.6780]            0.6567 [0.6407, 0.6724]
+BEDROC                0.1365 [0.1147, 0.1579]            0.1248 [0.1029, 0.1455]
+EF0.5%                7.8632 [5.8011, 9.8009]            7.5286 [5.7696, 9.5135]
+EF1%                  5.5933 [4.4648, 6.9120]            5.6768 [4.5493, 6.9600]
+EF2%                  4.6750 [3.8013, 5.3787]            3.9237 [3.2055, 4.6373]
+EF5%                  3.5397 [3.0909, 3.8918]            2.9219 [2.5023, 3.2692]
+
+paired bootstrap of the AUROC difference (LSAE - raw Morgan), 2000 valid replicates of 2000
+  mean -0.0068   two-sided 95% percentile interval [-0.0152, +0.0017]   
+
+CSV written to /home/s1856122/KinSPEC_github_script_corrected_path/others/Morgan_ablation/shap_radius_analysis/si_verification

@@ -1,0 +1,77 @@
+{
+  "started_at": "2026-10-10T15:04:02+01:00",
+  "python": "3.12.13 | packaged by Anaconda, Inc. | (main, Mar 19 2026, 20:20:58) [GCC 14.3.0]",
+  "executable": "/home/s1856122/anaconda3/envs/KinSPEC/bin/python",
+  "cwd": "/tmp",
+  "packages": {
+    "numpy": "2.4.6",
+    "pandas": "2.3.3",
+    "scipy": "1.17.1",
+    "scikit-learn": "1.9.0",
+    "xgboost": "3.2.0",
+    "torch": "2.14.1+cpu",
+    "rdkit": "2026.3.6",
+    "matplotlib": "3.11.2"
+  },
+  "environment": {
+    "OMP_NUM_THREADS": "4",
+    "OPENBLAS_NUM_THREADS": "4",
+    "MKL_NUM_THREADS": "4"
+  },
+  "runs": [
+    {
+      "script": "band_dataset_summary.py",
+      "command": [
+        "/home/s1856122/anaconda3/envs/KinSPEC/bin/python",
+        "-u",
+        "/home/s1856122/KinSPEC_github_script_corrected_path/others/Morgan_ablation/shap_radius_analysis/band_dataset_summary.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 19.41,
+      "finished_at": "2026-10-10T15:04:22+01:00",
+      "log": "others/Morgan_ablation/shap_radius_analysis/si_verification/path_fix_test_logs/band_dataset_summary.log",
+      "source_sha256": "43494e118586d01d0747d4a522f6e305d3a7f3e1a44cbd79209fe76cdef260ae"
+    },
+    {
+      "script": "high_prevalence_position_analysis.py",
+      "command": [
+        "/home/s1856122/anaconda3/envs/KinSPEC/bin/python",
+        "-u",
+        "/home/s1856122/KinSPEC_github_script_corrected_path/others/Morgan_ablation/shap_radius_analysis/high_prevalence_position_analysis.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 23.17,
+      "finished_at": "2026-10-10T15:04:26+01:00",
+      "log": "others/Morgan_ablation/shap_radius_analysis/si_verification/path_fix_test_logs/high_prevalence_position_analysis.log",
+      "source_sha256": "85fdc691fa903951179a2b4e4e00126a256f5c12d561b3cd620c99067260efec"
+    },
+    {
+      "script": "perturbation_ratio_convention.py",
+      "command": [
+        "/home/s1856122/anaconda3/envs/KinSPEC/bin/python",
+        "-u",
+        "/home/s1856122/KinSPEC_github_script_corrected_path/others/Morgan_ablation/shap_radius_analysis/perturbation_ratio_convention.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 57.75,
+      "finished_at": "2026-10-10T15:05:23+01:00",
+      "log": "others/Morgan_ablation/shap_radius_analysis/si_verification/path_fix_test_logs/perturbation_ratio_convention.log",
+      "source_sha256": "d9fd2c767de67827467d940e7c192a71eda8e5129fb0bda5197d5056e08b3aff"
+    },
+    {
+      "script": "pool_model_evaluation.py",
+      "command": [
+        "/home/s1856122/anaconda3/envs/KinSPEC/bin/python",
+        "-u",
+        "/home/s1856122/KinSPEC_github_script_corrected_path/others/Morgan_ablation/shap_radius_analysis/pool_model_evaluation.py"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 82.31,
+      "finished_at": "2026-10-10T15:05:44+01:00",
+      "log": "others/Morgan_ablation/shap_radius_analysis/si_verification/path_fix_test_logs/pool_model_evaluation.log",
+      "source_sha256": "1442c21f652e11616da1a4ca0ab3d1c4ac3fdd712d899544ca97b3302ef76eba"
+    }
+  ],
+  "finished_at": "2026-10-10T15:05:44+01:00",
+  "all_passed": true
+}

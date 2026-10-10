@@ -1,0 +1,20 @@
+band 0.10-0.50 complete set
+  compound-kinase pairs            100,000
+  active pairs                     5,000
+  unique active compounds          1,339
+  kinase targets (active pairs)    363
+  kinase targets (all pairs)       381
+  max_sim_vsds  min 0.100   max 0.495   median 0.339
+
+per-fold training partitions
+  fold 1   rows 80,000   active rows 4,000   unique active molecules 1,114
+  fold 2   rows 80,000   active rows 4,000   unique active molecules 1,125
+  fold 3   rows 80,000   active rows 4,000   unique active molecules 1,105
+  fold 4   rows 80,000   active rows 4,000   unique active molecules 1,127
+  fold 5   rows 80,000   active rows 4,000   unique active molecules 1,132
+  union of unique active molecules across folds   1,339
+  sum of per-fold unique active molecules   5,603
+
+VSDS-VD test set
+  entries   49,706   actives 1,198   decoys 48,508
+  one third of actives   399

@@ -1,0 +1,243 @@
+{
+  "finished_at": "2026-10-10T15:06:06+01:00",
+  "all_four_scripts_exit_zero": true,
+  "working_directory_independence_test": "All four scripts executed from /tmp using absolute script paths",
+  "csv_comparisons": [
+    {
+      "file": "count_stratification.csv",
+      "rows": 5,
+      "columns_match": true,
+      "shape_match": true,
+      "non_numeric_match": true,
+      "all_numeric_finite": true,
+      "max_absolute_difference": 0.0,
+      "differences_by_column": {
+        "stratum": 0.0,
+        "count_min": 0.0,
+        "count_max": 0.0,
+        "entries": 0.0,
+        "actives": 0.0,
+        "decoys": 0.0
+      },
+      "matches_within_1e-5": true,
+      "sha256_after": "e1201193123d757fa8af2a193aa549e785c8890af37f8a1e04e71f3cf55f8160"
+    },
+    {
+      "file": "high_prevalence_positions.csv",
+      "rows": 37,
+      "columns_match": true,
+      "shape_match": true,
+      "non_numeric_match": true,
+      "all_numeric_finite": true,
+      "max_absolute_difference": 0.0,
+      "differences_by_column": {
+        "bit": 0.0,
+        "radius": 0.0,
+        "prev_actives": 0.0,
+        "prev_decoys": 0.0,
+        "difference": 0.0
+      },
+      "matches_within_1e-5": true,
+      "sha256_after": "dd7b8063638d1c39142bba9aa14607fa68c019d16135b90ee6fdbab1a716431c"
+    },
+    {
+      "file": "pool_model_metrics.csv",
+      "rows": 6,
+      "columns_match": true,
+      "shape_match": true,
+      "non_numeric_match": true,
+      "all_numeric_finite": true,
+      "max_absolute_difference": 2.4454745228080776e-05,
+      "differences_by_column": {
+        "raw Morgan_value": 3.073287912880307e-06,
+        "raw Morgan_lo": 3.1809924999626205e-08,
+        "raw Morgan_hi": 2.5679716791904283e-07,
+        "LSAE_value": 2.3075692071203302e-05,
+        "LSAE_lo": 1.9182656890298633e-05,
+        "LSAE_hi": 2.4454745228080776e-05
+      },
+      "matches_within_1e-5": false,
+      "sha256_after": "6c64ef98394f1f06a746ca95e3365473f3504183f60ab9ebb3e14126ce47adbb"
+    },
+    {
+      "file": "position_prevalence_strata.csv",
+      "rows": 4,
+      "columns_match": true,
+      "shape_match": true,
+      "non_numeric_match": true,
+      "all_numeric_finite": true,
+      "max_absolute_difference": 0.0,
+      "differences_by_column": {
+        "positions": 0.0,
+        "radius_0_pct": 0.0,
+        "radius_1_pct": 0.0,
+        "radius_2_pct": 0.0
+      },
+      "matches_within_1e-5": true,
+      "sha256_after": "bc6ea90547e4b5be8ff6515980799876cdec64e3bce9806d11a432f70a207055"
+    },
+    {
+      "file": "ratio_convention_per_fold.csv",
+      "rows": 20,
+      "columns_match": true,
+      "shape_match": true,
+      "non_numeric_match": true,
+      "all_numeric_finite": true,
+      "max_absolute_difference": 1.7881393432617188e-07,
+      "differences_by_column": {
+        "fold": 0.0,
+        "keep_ratio_of_means": 3.599999999492898e-08,
+        "keep_mean_of_ratios": 9.685754780164313e-08,
+        "delete_ratio_of_means": 1.6000000002680537e-07,
+        "delete_mean_of_ratios": 1.7881393432617188e-07
+      },
+      "matches_within_1e-5": true,
+      "sha256_after": "237bbf8d71e4451163ee5e242d0f991ce3023de25bf81c1fd92c6b5f403dc8ec"
+    }
+  ],
+  "consistency_checks": [
+    {
+      "check": "keep_ratio_of_means matches band E1 results",
+      "max_absolute_difference": 4.995165769905441e-08,
+      "passed": true
+    },
+    {
+      "check": "delete_ratio_of_means matches band E1 results",
+      "max_absolute_difference": 1.5330096214682953e-07,
+      "passed": true
+    }
+  ],
+  "pool_model_metrics": [
+    {
+      "metric": "AUROC",
+      "raw Morgan_value": 0.66361050990264,
+      "raw Morgan_lo": 0.6471364797974921,
+      "raw Morgan_hi": 0.6780071817729308,
+      "LSAE_value": 0.6567125375116687,
+      "LSAE_lo": 0.6406651562132182,
+      "LSAE_hi": 0.6723791644147783
+    },
+    {
+      "metric": "BEDROC",
+      "raw Morgan_value": 0.1365133408585276,
+      "raw Morgan_lo": 0.1146729995897982,
+      "raw Morgan_hi": 0.1579166450528705,
+      "LSAE_value": 0.1248475785566883,
+      "LSAE_lo": 0.1029442582065176,
+      "LSAE_hi": 0.145519851024169
+    },
+    {
+      "metric": "EF0.5%",
+      "raw Morgan_value": 7.8631792234369104,
+      "raw Morgan_lo": 5.801140925104977,
+      "raw Morgan_hi": 9.800894600672088,
+      "LSAE_value": 7.52857585222683,
+      "LSAE_lo": 5.76961676633446,
+      "LSAE_hi": 9.513503563620676
+    },
+    {
+      "metric": "EF1%",
+      "raw Morgan_value": 5.5933295935882406,
+      "raw Morgan_lo": 4.464787762881897,
+      "raw Morgan_hi": 6.912030121253871,
+      "LSAE_value": 5.676812124835827,
+      "LSAE_lo": 4.549301624550519,
+      "LSAE_hi": 6.959957165036343
+    },
+    {
+      "metric": "EF2%",
+      "raw Morgan_value": 4.675021749864798,
+      "raw Morgan_lo": 3.801327379578491,
+      "raw Morgan_hi": 5.378719449370564,
+      "LSAE_value": 3.923678968636527,
+      "LSAE_lo": 3.20551514213486,
+      "LSAE_hi": 4.637338894412317
+    },
+    {
+      "metric": "EF5%",
+      "raw Morgan_value": 3.5396593248976327,
+      "raw Morgan_lo": 3.090898314063763,
+      "raw Morgan_hi": 3.891845272824112,
+      "LSAE_value": 2.921888593665499,
+      "LSAE_lo": 2.5022693607163564,
+      "LSAE_hi": 3.2691555142635216
+    }
+  ],
+  "all_checks_passed": false,
+  "scope": "Full execution of four newly added analysis scripts; no Optuna optimization, retraining or full SHAP mechanism rerun.",
+  "all_execution_and_consistency_checks_passed": true,
+  "historical_csv_comparison_within_1e-5": false,
+  "interpretation": "All four complete scripts ran successfully from /tmp, and both independent band E1 consistency checks passed. Three prevalence/statification CSVs are numerically identical to prior outputs; the perturbation CSV differs by at most 1.79e-7. The full-pool CSV differs by at most 2.45e-5. With the recorded NumPy 1.26.4 / XGBoost 3.0.0 versions, Morgan AUROC/BEDROC and BEDROC confidence limits match historical values to machine precision, confirming its BEDROC difference is caused by NumPy ranking behavior for ties. LSAE differences of about 2.5e-5 persist in that control; their historical source is not established. Test outputs use the current recorded CPU environment and original reference CSVs are preserved.",
+  "reference_runtime_diagnostic": {
+    "numpy": "1.26.4",
+    "xgboost": "3.0.0",
+    "checks": [
+      {
+        "model": "raw Morgan",
+        "metric": "AUROC",
+        "recomputed": 0.66361050990264,
+        "historical": 0.66361050990264,
+        "difference": 0.0
+      },
+      {
+        "model": "raw Morgan",
+        "metric": "BEDROC",
+        "recomputed": 0.13651026757061477,
+        "historical": 0.1365102675706147,
+        "difference": 5.551115123125783e-17
+      },
+      {
+        "model": "LSAE",
+        "metric": "AUROC",
+        "recomputed": 0.6567125375116687,
+        "historical": 0.6567151101042075,
+        "difference": -2.5725925387742876e-06
+      },
+      {
+        "model": "LSAE",
+        "metric": "BEDROC",
+        "recomputed": 0.12484709278989461,
+        "historical": 0.1248706542487595,
+        "difference": -2.3561458864881923e-05
+      },
+      {
+        "model": "raw Morgan",
+        "metric": "BEDROC_lo",
+        "recomputed": 0.11467296777987322,
+        "historical": 0.1146729677798732,
+        "difference": 2.7755575615628914e-17
+      },
+      {
+        "model": "raw Morgan",
+        "metric": "BEDROC_hi",
+        "recomputed": 0.15791638825570262,
+        "historical": 0.1579163882557026,
+        "difference": 2.7755575615628914e-17
+      },
+      {
+        "model": "LSAE",
+        "metric": "BEDROC_lo",
+        "recomputed": 0.10294564877793053,
+        "historical": 0.1029634408634079,
+        "difference": -1.779208547737776e-05
+      },
+      {
+        "model": "LSAE",
+        "metric": "BEDROC_hi",
+        "recomputed": 0.14551939614816767,
+        "historical": 0.1455443057693971,
+        "difference": -2.4909621229418644e-05
+      }
+    ],
+    "max_abs_difference": 2.4909621229418644e-05
+  },
+  "changed_scripts": [
+    "band_dataset_summary.py",
+    "high_prevalence_position_analysis.py",
+    "pool_model_evaluation.py",
+    "perturbation_ratio_convention.py"
+  ],
+  "changes": "Resolve all inputs and outputs with the existing kinspec_paths.py using the script location, use the supplied VSDS filename, and replace undefined p_(line) with print(line). Statistical methods and bootstrap replicate counts were preserved.",
+  "input_manifest": "input_manifest.json",
+  "runtime_manifest": "run_metadata.json"
+}
