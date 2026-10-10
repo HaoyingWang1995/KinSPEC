@@ -5,13 +5,13 @@ KinSPEC is a machine-learning workflow for compound–kinase interaction predict
 ## Feature pipeline
 
 1. Generate radius-2, 4,096-bit Morgan fingerprints for compounds.
-2. Encode them using the pretrained v4 LSAE and retain **417** molecular features.
+2. Encode them using the pretrained LSAE and retain **417** molecular features.
 3. Encode **85 KLIFS pocket positions × 23 residue-property indicators = 1,955** kinase features.
 4. Reduce the kinase block to **200** dimensions with Multiple Correspondence Analysis (MCA).
 5. Concatenate features in **molecular, then kinase** order and train or load XGBoost: **417 + 200 = 617 inputs**.
 6. Evaluate on VSDS, KIBA, and Karaman; interpret predictions with SHAP, pocket-property mapping, and entropy analysis.
 
-Prepared features and model weights allow evaluation without retraining the autoencoder, refitting MCA, or retraining XGBoost. KinSPEC_LTS uses the same main representation with a Karaman-similarity-filtered training pool. The `v9` interpretation-script name denotes the analysis implementation; it loads **v4** model resources.
+Prepared features and model weights allow evaluation without retraining the autoencoder, refitting MCA, or retraining XGBoost. KinSPEC_LTS uses the same main representation with a Karaman-similarity-filtered training pool.
 
 ## Repository structure
 
@@ -27,9 +27,9 @@ KinSPEC/
 ├── model/
 │   └── download_model_hf.py            # Download and extract model archives
 ├── feature_embedding/
-│   ├── mol/                           # v4 LSAE notebooks, weights, indices, decoder
+│   ├── mol/                           # LSAE notebooks, weights, indices, decoder
 │   └── Kinase_test_MCA/                # PSM/MCA notebooks and released feature tables
-├── model_training/                    # Eleven v4 training/evaluation notebooks
+├── model_training/                    # Training and evaluation notebooks
 ├── model_interpretability/            # SHAP, KernelSHAP, background and entropy scripts
 └── others/
     ├── baseline/                      # HitScreen, MolTrans, PSICHIC, TransformerCPI wrappers
@@ -144,7 +144,7 @@ The notebook writes selectivity outputs under `evaluation_result/Karaman_MAC_res
 
 ## Feature generation and dataset construction
 
-[Molecular notebooks](feature_embedding/mol/) train the v4 LSAE and extract embeddings for the full pool, similarity bands, VSDS, KIBA, Karaman, and LTS. Their current names include `_v4`. Supplied `.pt` resources include the LSAE, ranked latent-feature indices, and the LTS decoder. Use the first **417** ranked features for the main v4 model.
+[Molecular notebooks](feature_embedding/mol/) train the LSAE and extract embeddings for the full pool, similarity bands, VSDS, KIBA, Karaman, and LTS. Supplied `.pt` resources include the LSAE, ranked latent-feature indices, and the LTS decoder. Use the first **417** ranked features for the KinSPEC model.
 
 [protein_to_binary_MCA.ipynb](feature_embedding/Kinase_test_MCA/protein_to_binary_MCA.ipynb) encodes the pocket features; [MCA_klifs.ipynb](feature_embedding/Kinase_test_MCA/MCA_klifs.ipynb) fits MCA and exports coordinates, contributions, inertia, and stability resources. The released MCA table covers **482 human kinases**.
 
@@ -165,7 +165,7 @@ python model_interpretability/KinSPEC_kernelshap_rf.py \
     --outdir model_interpretability/kernelshap_Imatinib_ABL1_new_run
 ```
 
-`KinSPEC_kernelshap_rf.py` imports both the v9 implementation and `KinSPEC_kernelshap_control.py`; keep all three files. Control need not be executed first. The `rf` implementation uses SAE + XGBoost. [compare_v9_kernelshap_atoms_rf.py](model_interpretability/compare_v9_kernelshap_atoms_rf.py) compares existing outputs rather than generating the underlying SHAP runs. Additional entropy and residue summaries are implemented in the other scripts and [entropy_analysis.ipynb](model_interpretability/entropy_analysis.ipynb).
+`KinSPEC_kernelshap_rf.py` imports both `KinSPEC_interpretability_v9.py` and `KinSPEC_kernelshap_control.py`; keep all three files. `KinSPEC_kernelshap_control.py` need not be executed first. `KinSPEC_kernelshap_rf.py` uses SAE + XGBoost. [compare_v9_kernelshap_atoms_rf.py](model_interpretability/compare_v9_kernelshap_atoms_rf.py) compares existing outputs rather than generating the underlying SHAP runs. Additional entropy and residue summaries are implemented in the other scripts and [entropy_analysis.ipynb](model_interpretability/entropy_analysis.ipynb).
 
 ## Supplementary analyses
 
