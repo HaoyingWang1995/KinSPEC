@@ -41,7 +41,7 @@ KinSPEC/
     └── draw_figures/                   # VSDS, KIBA LUDe and Karaman plotting
 ```
 
-The supplementary release files listed above should accompany the corresponding workflows. Downloaded data belong in `dataset/`; extracted predictive weights belong in subfolders of `model/`. New interpretation and evaluation output directories are created by their workflows. The old `download_model_dataset.ipynb` and `zenodo_upload_dataset.ipynb` are absent from the inspected GitHub tree.
+Downloaded data belong in `dataset/`; extracted predictive weights belong in subfolders of `model/`. Interpretation and evaluation workflows create their output directories when run. `kinspec_paths.py` resolves project-relative paths for the scripts and notebooks.
 
 ## Installation
 
@@ -56,13 +56,13 @@ python -m pip install huggingface_hub jupyterlab prince seaborn statsmodels open
 jupyter lab
 ```
 
-`environment.yml` specifies Python 3.11 and the main numerical, PyTorch, XGBoost, RDKit, Optuna, and SHAP dependencies. Its platform/CUDA-specific package pins may require adjustment for a different machine. The additional command supplies downloader, notebook, MCA, and plotting packages absent from that file. Environment installation was not exercised by the upload audit.
+`environment.yml` specifies Python 3.11 and the main numerical, PyTorch, XGBoost, RDKit, Optuna, and SHAP dependencies. Its platform/CUDA-specific package pins may require adjustment for a different machine. The additional command installs the downloader, notebook, MCA, and plotting dependencies.
 
-Training notebooks commonly configure CUDA. Review their configuration cells before using a CPU machine. Baselines also require their upstream packages and preprocessing resources. The PSM numerical audit used a separate pinned dependency set; use its matching `requirements.txt` in a separate environment once that file is included, rather than treating it as a dependency lock for the whole project.
+Training notebooks commonly configure CUDA. Review their configuration cells before using a CPU machine. Baselines also require their upstream packages and preprocessing resources.
 
 ## Download datasets and predictive weights
 
-The helpers target the [Hugging Face dataset](https://huggingface.co/datasets/Lumineb/KinSPEC) and [Hugging Face model repository](https://huggingface.co/Lumineb/KinSPEC). Both anonymous API checks returned HTTP 401 during the audit. Authenticate with an account that has access, or make the releases public before advertising anonymous downloads. File availability and archive contents were not verified through authenticated access.
+Download the processed data from the [Hugging Face dataset repository](https://huggingface.co/datasets/Lumineb/KinSPEC) and predictive weights from the [Hugging Face model repository](https://huggingface.co/Lumineb/KinSPEC). The repository includes separate download helpers for each. If access requires authentication, run `hf auth login` with an account that has access.
 
 ```bash
 # Authenticate when repository access requires it.
@@ -81,8 +81,6 @@ python model/download_model_hf.py --files KinSPEC.tar.gz
 
 The default download destinations are the scripts' own `dataset/` and `model/` directories. Model `.tar.gz` files are extracted automatically; the dataset helper automatically extracts `data_split_from_merged_true_fold.tar.gz`. Both helpers support `--files`, `--include`, `--out`, `--no-extract`, and `--remove-archives`. Running either without file-selection options downloads all accessible release files and can require substantial disk space.
 
-The earlier documentation also references [model DOI 10.5281/zenodo.21739888](https://doi.org/10.5281/zenodo.21739888) and [dataset DOI 10.5281/zenodo.20558270](https://doi.org/10.5281/zenodo.20558270). These are retained references; their coverage of the corrected v4 release has not been checked.
-
 Expected model groups after obtaining the corresponding resources:
 
 | Folder | Representation or purpose |
@@ -95,7 +93,7 @@ Expected model groups after obtaining the corresponding resources:
 | `model/Morgan_raw/` | 4,096 raw Morgan + 200 MCA = 4,296 inputs |
 | `model/{HitScreen,MolTrans,PSICHIC,TransformerCPI}/` | Retrained baseline weights |
 
-Not all ablation weights are necessarily in the configured model release; check the file list. The inspected GitHub snapshot has no `others/PSM_model/` archive. Use the matching raw PSM weights or regenerate them through the appropriate training workflow.
+Use weights matching the selected feature representation. Check the model repository's file list for available archives; obtain the corresponding ablation weights or train them with the appropriate workflow.
 
 ## Dataset conventions
 
@@ -150,11 +148,11 @@ The notebook writes selectivity outputs under `evaluation_result/Karaman_MAC_res
 
 [protein_to_binary_MCA.ipynb](feature_embedding/Kinase_test_MCA/protein_to_binary_MCA.ipynb) encodes the pocket features; [MCA_klifs.ipynb](feature_embedding/Kinase_test_MCA/MCA_klifs.ipynb) fits MCA and exports coordinates, contributions, inertia, and stability resources. The released MCA table covers **482 human kinases**.
 
-[data_split/](data_split/) contains the five construction notebooks for the training pool, similarity subsets, KIBA, and Karaman. These files are present on GitHub but absent from the corrected local reference directory used in the upload comparison. They are historical construction workflows: review their raw inputs and paths separately before running them. They are unnecessary for evaluation with prepared release data.
+[data_split/](data_split/) contains five notebooks for constructing the training pool, similarity subsets, KIBA benchmarks, and Karaman benchmark. Review their source-data requirements and input paths before running them. Evaluation with prepared data does not require rerunning dataset construction.
 
 ## Model interpretation
 
-The main workflow is [KinSPEC_interpretability_v9.py](model_interpretability/KinSPEC_interpretability_v9.py). Its defaults require molecular and kinase background CSVs under `model_interpretability/background_data/`; these files are absent from the GitHub snapshot. Supply the matching backgrounds or review [prepare_interpretability_backgrounds.py](model_interpretability/prepare_interpretability_backgrounds.py) and its output paths before generating them from the downloaded training resources.
+The main workflow is [KinSPEC_interpretability_v9.py](model_interpretability/KinSPEC_interpretability_v9.py). It requires molecular and kinase background CSVs under `model_interpretability/background_data/`. Supply the matching backgrounds or use [prepare_interpretability_backgrounds.py](model_interpretability/prepare_interpretability_backgrounds.py) to generate them from the training resources, checking its input and output configuration first.
 
 Once the models and background inputs are available:
 
@@ -169,9 +167,11 @@ python model_interpretability/KinSPEC_kernelshap_rf.py \
 
 `KinSPEC_kernelshap_rf.py` imports both the v9 implementation and `KinSPEC_kernelshap_control.py`; keep all three files. Control need not be executed first. The `rf` implementation uses SAE + XGBoost. [compare_v9_kernelshap_atoms_rf.py](model_interpretability/compare_v9_kernelshap_atoms_rf.py) compares existing outputs rather than generating the underlying SHAP runs. Additional entropy and residue summaries are implemented in the other scripts and [entropy_analysis.ipynb](model_interpretability/entropy_analysis.ipynb).
 
-## Raw PSM analyses
+## Supplementary analyses
 
-[others/pure_PSM_workflow/](others/pure_PSM_workflow/) contains six analysis entry points:
+### Raw PSM analyses
+
+[others/pure_PSM_workflow/](others/pure_PSM_workflow/) compares the raw kinase property encoding with MCA using performance, attribution, selectivity, and control analyses. It provides six entry points:
 
 | Entry point | Purpose |
 |---|---|
@@ -182,7 +182,7 @@ python model_interpretability/KinSPEC_kernelshap_rf.py \
 | `run_history.py` | Historical importance, stability, and exploratory analyses |
 | `run_tables.py` | Export fixed historical SI values, rather than newly computed summaries |
 
-The uploaded package includes 41 analysis modules, two intermediate-preparation modules, a workflow scheduler, validation helpers, and four test files. Default inputs are **22 CSVs directly in `dataset/` plus 31 MCA and 31 PSM JSON models** in `model/KinSPEC/` and `model/PSM_raw/`. The two Karaman result CSVs supplied in this code directory must also be available at their expected `dataset/` paths. Seven additional PSM/MCA feature tables complete the workflow-specific inputs.
+Default inputs are **22 CSVs directly in `dataset/` plus 31 MCA and 31 PSM JSON models** in `model/KinSPEC/` and `model/PSM_raw/`. [release_input_manifest.csv](others/pure_PSM_workflow/release_input_manifest.csv) lists the expected paths and sizes. The two Karaman result CSVs supplied in this code directory must also be available at their expected `dataset/` paths. Seven additional PSM/MCA feature tables complete the workflow-specific inputs.
 
 After obtaining the inputs listed in the included manifest:
 
@@ -195,16 +195,14 @@ python run_performance.py --device cpu
 python run_selectivity.py --steps guilt,strat --device cpu
 ```
 
-`--dry-run` lists the work; `--check` checks input availability. New results default to this directory's `results/`. Controls include expensive retraining and attribution may require substantial time and memory. Full numerical/historical validation has additional provenance requirements; the uploaded test suite includes release-maintenance tests referring to files outside the published code subset. The upload audit did not run full PSM calculations or assert that the public package passes those tests.
+`--dry-run` lists the work; `--check` checks input availability. New results default to this directory's `results/`. Controls include retraining, and SHAP attribution may require substantial time and memory.
 
-## Baselines and supplementary analyses
+### Baselines and other analyses
 
-[others/baseline/](others/baseline/) contains KinSPEC-specific wrappers for HitScreen, MolTrans, PSICHIC, and TransformerCPI. Baseline checkpoints alone are insufficient: obtain their upstream implementations and prepare the expected embeddings. The corrected scripts expect upstream code under `external/<baseline>/`, MolTrans ESPF resources under `external/MolTrans/ESPF/`, prepared inputs under `dataset/preprocessed/<baseline>/`, and checkpoints under `model/<baseline>/`. These upstream/preprocessing resources are absent from the inspected code release.
+[others/baseline/](others/baseline/) contains KinSPEC-specific wrappers for HitScreen, MolTrans, PSICHIC, and TransformerCPI. Obtain their upstream implementations and prepare the expected embeddings before running the wrappers. The scripts expect upstream code under `external/<baseline>/`, MolTrans ESPF resources under `external/MolTrans/ESPF/`, prepared inputs under `dataset/preprocessed/<baseline>/`, and checkpoints under `model/<baseline>/`.
 
 Other folders provide raw Morgan ablation, amino-acid one-hot/MCA alternatives, prior-conflict analyses, PSM feature-sharing results, and figure scripts. Figure and comparison scripts may consume previously generated result tables. Review their input configuration before executing them.
 
-## Validation and license
-
-The upload audit compared shared file contents using SHA-256 and checked syntax for **96 Python files and 230 code cells across 38 notebooks**, with no syntax errors after removing notebook magic/shell lines for parsing. It confirmed the restored path helper matches the local source and that notebook path setup succeeds. The restored PSM manifest matches the local source and its checker found 84/84 prepared local inputs with expected file sizes. A fresh code checkout still needs those data and weights downloaded separately. These checks do not establish environment reproducibility, successful inference, retraining, or complete scientific reproduction.
+## License and citation
 
 KinSPEC code is released under the [Apache License 2.0](LICENSE). Third-party datasets and baseline implementations retain their respective licenses and terms. Cite the KinSPEC publication when its bibliographic details are available, along with the original resources used in your analysis.
